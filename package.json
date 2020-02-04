@@ -1,0 +1,17 @@
+{
+  "name": "troy.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "node main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite-pool": "^0.2.3",
+    "discord.js": "^11.5.1",
+    "enmap": "^5.2.4"
+  }
+}
