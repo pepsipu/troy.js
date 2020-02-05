@@ -2,13 +2,7 @@ const db = require("../db");
 const colors = require("colors");
 const Discord = require("discord.js");
 const embed = require("../misc/embed");
-
-classes = {
-    "bio": [
-        "ngo",
-        "kirkpatrick"
-    ]
-};
+const classes = require("../subjects.json");
 
 module.exports.fn = (msg, args) => {
     let err = embed(msg, "HW Command", "Here is how to use the HW command");
@@ -31,7 +25,7 @@ module.exports.fn = (msg, args) => {
             msg.channel.send(err);
             return;
         }
-        if (!(assignment_meta[1] in classes[assignment_meta[0]])) {
+        if (!(classes[assignment_meta[0]].includes(assignment_meta[1]))) {
             let err = embed(msg, "Invalid Teacher", `"${assignment_meta[1]}" is not a valid teacher. Valid teachers are:`);
             classes[assignment_meta[0]].forEach(teacher => {
                 err.addField(teacher, "Completely valid.");
@@ -39,7 +33,9 @@ module.exports.fn = (msg, args) => {
             msg.channel.send(err);
             return;
         }
+        let assignment = args.slice(3).join(" ");
 
+        console.log(assignment);
     }
 };
 
