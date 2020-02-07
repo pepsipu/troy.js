@@ -2,10 +2,22 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const dbs = require("./db");
 const colors = require('colors');
-
+const subjects = require("./subjects");
 const config = require("./config");
 
-// set up databases
+// set up databases, if not setup
+for (let subject in subjects) {
+    if (!dbs.homework.has(subject)) {
+        let teachers = {};
+        Array.from(subjects[subject]).forEach(teacher => {
+            teachers[teacher] = [];
+        });
+        dbs.homework.set(subject, teachers);
+    }
+    if (!dbs.tests.has(subject)) {
+        dbs.tests.set(subject, []);
+    }
+};
 
 
 // read all commands available
