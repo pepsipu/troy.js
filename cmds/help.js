@@ -5,7 +5,7 @@ const embed = require("../misc/embed");
 let help_info = [];
 
 module.exports.fn = msg => {
-    let help_msg = embed(msg, "Help", "Here are a list of commands to help you survive Troy.");
+    let help_msg = embed(msg, "Help", "Commands for troy bot.");
     for (let info in help_info) {
         help_msg.addField(info, help_info[info]);
     }
