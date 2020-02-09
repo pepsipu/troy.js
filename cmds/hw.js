@@ -9,14 +9,14 @@ function valid_class(msg, args) {
     let assignment_meta = args[2].split(":");
     if (assignment_meta.length < 2) {
         msg.channel.send(err);
-        return false;
+        return [false, false];
     }
     let days_until_due;
     if (assignment_meta.length > 2) {
         days_until_due = parseInt(assignment_meta[2]);
         if (days_until_due === NaN || days_until_due <= 0) {
             let err = embed(msg, "Invalid Due Date", `"${assignment_meta[2]}" is not a valid due date. Make sure it is positive`);
-            return false;
+            return [false, false];
         }
     } else {
         days_until_due = 1;
@@ -27,7 +27,7 @@ function valid_class(msg, args) {
             err.addField(class_i, class_i);
         }
         msg.channel.send(err);
-        return false;
+        return [false, false];
     }
     if (!(classes[assignment_meta[0]].includes(assignment_meta[1]))) {
         let err = embed(msg, "Invalid Teacher", `"${assignment_meta[1]}" is not a valid teacher. Valid teachers are:`);
@@ -35,7 +35,7 @@ function valid_class(msg, args) {
             err.addField(teacher, "Completely valid.");
         });
         msg.channel.send(err);
-        return false;
+        return [false, false];
     }
     return [assignment_meta, days_until_due];
 }
@@ -86,6 +86,9 @@ module.exports.fn = (msg, args) => {
             return;
         }
         let [class_input, days_until_due] = valid_class(msg, args);
+        if (!class_input) {
+            return;
+        }
         dbs.homework.set(`${class_input[0]}.${class_input[1]}`, []);
         msg.channel.send(embed(msg, "Cleared!", `homework for ${class_input[0]} for ${class_input[1]} has been cleared.`));
     }
