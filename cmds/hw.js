@@ -91,6 +91,8 @@ module.exports.fn = (msg, args) => {
         }
         dbs.homework.set(`${class_input[0]}.${class_input[1]}`, []);
         msg.channel.send(embed(msg, "Cleared!", `homework for ${class_input[0]} for ${class_input[1]} has been cleared.`));
+    } else {
+        msg.channel.send(err);
     }
 };
 
